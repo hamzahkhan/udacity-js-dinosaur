@@ -116,12 +116,13 @@
 
 
     // Create Human Object
-    function Human(name, feet, inches, weight, diet){
+    function Human(name, feet, inches, weight, diet, height){
         this.name = name,
         this.feet = feet,
         this.inches = inches,
         this.weight = weight,
-        this.diet = diet
+        this.diet = diet,
+        this.height = height
     }
 
     // Use IIFE to get human data from form
@@ -141,7 +142,8 @@
         const humanInches = humanFormData.humanInches.value;
         const humanWeight = humanFormData.humanWeight.value;
         const humanDiet = humanFormData.humanDiet.value;
-        const humanObj = new Human(humanName, humanFeet, humanInches, humanWeight, humanDiet)
+        const height = (humanFeet*12) + humanInches;
+        const humanObj = new Human(humanName, humanFeet, humanInches, humanWeight, humanDiet, height)
         return humanObj;
     }
 
