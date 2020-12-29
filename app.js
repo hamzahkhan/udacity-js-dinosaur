@@ -8,7 +8,7 @@
                 "where": "North America",
                 "when": "Late Cretaceous",
                 "color": "#009687f5",
-                "image": "url('images/triceratops.png')",
+                "image": "images/triceratops.png",
                 "fact": "First discovered in 1889 by Othniel Charles Marsh"
             },
             {
@@ -19,7 +19,7 @@
                 "where": "North America",
                 "when": "Late Cretaceous",
                 "color": "#dc7657f5",
-                "image": "url('images/tyrannosaurus rex.png')",
+                "image": "images/tyrannosaurus rex.png",
                 "fact": "The largest known skull measures in at 5 feet long."
             },
             {
@@ -30,7 +30,7 @@
                 "where": "North America",
                 "when": "Late Cretaceous",
                 "color": "#4bb3c1fa",
-                "image": "url('images/anklyosaurus.png')",
+                "image": "images/anklyosaurus.png",
 
                 "fact": "Anklyosaurus survived for approximately 135 million years."
             },
@@ -42,7 +42,7 @@
                 "where": "North America",
                 "when": "Late Jurasic",
                 "color": "#fac069f9",
-                "image": "url('images/brachiosaurus.png')",
+                "image": "images/brachiosaurus.png",
                 "fact": "An asteroid was named 9954 Brachiosaurus in 1991."
             },
             {
@@ -53,7 +53,7 @@
                 "where": "North America, Europe, Asia",
                 "when": "Late Jurasic to Early Cretaceous",
                 "color": "#67a866f9",
-                "image": "url('images/stegosaurus.png')",
+                "image": "images/stegosaurus.png",
                 "fact": "The Stegosaurus had between 17 and 22 seperate places and flat spines."
             },
             {
@@ -64,7 +64,7 @@
                 "where": "North America",
                 "when": "Late Cretaceous",
                 "color": "#009687f5",
-                "image": "url('images/elasmosaurus.png')",
+                "image": "images/elasmosaurus.png",
                 "fact": "Elasmosaurus was a marine reptile first discovered in Kansas."
             },
             {
@@ -75,7 +75,7 @@
                 "where": "North America",
                 "when": "Late Cretaceous",
                 "color": "#b94169fa",
-                "image": "url('images/pteranodon.png')",
+                "image": "images/pteranodon.png",
                 "fact": "Actually a flying reptile, the Pteranodon is not a dinosaur."
             },
             {
@@ -86,7 +86,7 @@
                 "where": "World Wide",
                 "when": "Holocene",
                 "color": "#7f62b3fa",
-                "image": "url('images/pigeon.png')",
+                "image": "images/pigeon.png",
                 "fact": "All birds are living dinosaurs."
             }
         ]
@@ -112,7 +112,7 @@
         const {species, weight, height, diet, where, when, fact, color, image} = data;
         const dinoObj = new Dino(species, weight, height, diet, where, when, fact,color, image);
         return dinoObj;
-    })
+    }).sort(() => 0.5-Math.random())
 
 
     // Create Human Object
@@ -147,15 +147,23 @@
 
     // Create Dino Compare Method 1
     // NOTE: Weight in JSON file is in lbs, height in inches. 
+    function compareOne(){
 
+    }
     
     // Create Dino Compare Method 2
     // NOTE: Weight in JSON file is in lbs, height in inches.
-
+    function compareTwo(){
+        
+    }
+    
     
     // Create Dino Compare Method 3
     // NOTE: Weight in JSON file is in lbs, height in inches.
-
+    function compareThree(){
+        
+    }
+    
 
     // Generate Tiles for each Dino in Array
     function generateTiles(dinosArray){
@@ -163,49 +171,27 @@
         for (let i = 0; i < 9; i++){
             let gridElement = document.createElement("div");
             gridElement.className = "grid-item"
+
             let innerGridHeader = document.createElement("h3");
             let innerGridFact = document.createElement("p");
-            let innerGridImage = document.createElement("div");
+            let innerGridImage = document.createElement("img");
             gridElement.id = "grid" + i;
 
             if (dinosArray[i]){
                 // call a function to render the CSS for each grid element
                 innerGridHeader.innerText = dinosArray[i].species;
-                // gridElement.style.backgroundImage = "url('https://static.wikia.nocookie.net/jurassicworld-evolution/images/9/96/Trikethumb.png/revision/latest?cb=20190817153424')";
-                // gridElement.style.background  = "#f3f3f3 url('https://static.wikia.nocookie.net/jurassicworld-evolution/images/9/96/Trikethumb.png/revision/latest?cb=20190817153424') no-repeat ";
-                // #009687f5 url('images/triceratops.png') 
-
-
-                gridElement.style.background  =  dinosArray[i].color + " " + dinosArray[i].image +  " no-repeat center";
-
-                gridElement.style.backgroundSize = "contain";
+                innerGridImage.setAttribute("src",dinosArray[i].image )
                 innerGridFact.innerText = dinosArray[i].fact;
-
-                // renderGridItem(i);
-
             }
             gridElement.appendChild(innerGridHeader)
-            // gridElement.appendChild(innerGridImage)
+            gridElement.appendChild(innerGridImage)
             gridElement.appendChild(innerGridFact)
 
             // gridContainer.appendChild(gridElement)
             tilesArray.push(gridElement)
         }
         return tilesArray
-    }
-
-    // render i'th grid and return a div
-    function renderGridItem(i) {
-
-    }
-
-    // Add tiles to DOM
-    
-    function addTilestoDom(item){
-        
-        // call generateTiles => return array of tile data 
-        // 
-    }
+    }  
 
     // creates parent DIV and adds child divs to it
     function generateInfographic(){
@@ -216,21 +202,24 @@
         generateTiles(dinosArray).forEach(function(item) {
             mainGrid.appendChild(item);
         })
-
-        // return gridContainer
     }
 
 
 // On button click, prepare and display infographic
     function onClickButton () {
-        document.getElementById("dino-compare").style.display = 'none';
-
-        generateInfographic();
+        document.getElementById("dino-compare").style.display = "none";
+        // document.getElementById("grid").classList.remove("hideGrid");
+        if(document.getElementById("grid").childNodes.length === 0){
+            generateInfographic();
+        }
+        document.getElementById("grid").style.display = "flex";
+    }
         
-        
-        // const dinoGrid = addTilesToDom();
-        // document.body.appendChild(generateInfographic());
+    function hideInfoShowForm(){
+        document.getElementById("grid").style.display = "none";
+        document.getElementById("dino-compare").style.display = "block";
     }
 
+document.getElementById("btn").onclick = onClickButton;
 
-document.getElementById("btn").onclick = onClickButton();
+document.getElementById("restart").onclick = hideInfoShowForm;
