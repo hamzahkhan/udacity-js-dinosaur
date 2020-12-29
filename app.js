@@ -37,7 +37,7 @@
             {
                 "species": "Brachiosaurus",
                 "weight": 70000,
-                "height": "372",
+                "height": 372,
                 "diet": "herbavor",
                 "where": "North America",
                 "when": "Late Jurasic",
@@ -147,23 +147,47 @@
 
     // Create Dino Compare Method 1
     // NOTE: Weight in JSON file is in lbs, height in inches. 
-    function compareOne(){
-
+    /**
+     * 
+     * @param {object} humanData human entered data from form
+     * @return {string}          output for user
+     */
+    
+    function compareHeight(humanData, dinoObject){
+        // check human height 
+        const humanHeight = humanData.height;
+        const dinoHeight = dinoObject.height;
+        return "Your height is " + humanHeight + " and the dino is " + dinoHeight
     }
     
     // Create Dino Compare Method 2
     // NOTE: Weight in JSON file is in lbs, height in inches.
-    function compareTwo(){
-        
+    function compareWeight(humanData, dinoObject){
+        const humanWeight = humanData.weight;
+        const dinoWeight = dinoObject.weight;
+        return "Your weight is " + humanWeight + " and the dino is " + dinoWeight
     }
     
     
     // Create Dino Compare Method 3
     // NOTE: Weight in JSON file is in lbs, height in inches.
-    function compareThree(){
-        
+    function compareDiet(humanData, dinoObject){
+        const humanDiet = humanData.diet;
+        const dinoDiet = dinoObject.diet;
+        return "Your diet is " + humanDiet + " and the dino is " + dinoDiet
     }
     
+    // compares dinoObject with human entered data
+    function getFactRandom(dinoObject){
+        let factRandom = []
+        factRandom.push(dinoObject.fact)
+        console.log("this is dhhumanData")
+        
+        factRandom.push(compareHeight(humanData(), dinoObject))
+        factRandom.push(compareWeight(humanData(), dinoObject))
+        factRandom.push(compareDiet(humanData(), dinoObject))
+        return factRandom[Math.floor(Math.random()*4)]
+    }
 
     // Generate Tiles for each Dino in Array
     function generateTiles(dinosArray){
@@ -181,7 +205,10 @@
                 // call a function to render the CSS for each grid element
                 innerGridHeader.innerText = dinosArray[i].species;
                 innerGridImage.setAttribute("src",dinosArray[i].image )
-                innerGridFact.innerText = dinosArray[i].fact;
+                
+                // can make this random from a function
+                // innerGridFact.innerText = dinosArray[i].fact;
+                innerGridFact.innerText = getFactRandom(dinosArray[i]);
             }
             gridElement.appendChild(innerGridHeader)
             gridElement.appendChild(innerGridImage)
@@ -211,6 +238,7 @@
         // document.getElementById("grid").classList.remove("hideGrid");
         if(document.getElementById("grid").childNodes.length === 0){
             generateInfographic();
+            // add comparision function for human vs DINO
         }
         document.getElementById("grid").style.display = "flex";
     }
