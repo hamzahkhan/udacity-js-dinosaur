@@ -202,13 +202,19 @@
             gridElement.id = "grid" + i;
 
             if (dinosArray[i]){
-                // call a function to render the CSS for each grid element
+
+                if(i ===4){
+                    let humanObj = humanData()
+                    innerGridHeader.innerText = humanObj.name;
+                    innerGridImage.setAttribute("src", 'https://static.wikia.nocookie.net/surrealmemes/images/0/09/Meme_Man_HD.png/revision/latest?cb=20190103112747' )
+                }
+                else{
                 innerGridHeader.innerText = dinosArray[i].species;
                 innerGridImage.setAttribute("src",dinosArray[i].image )
-                
                 // can make this random from a function
                 // innerGridFact.innerText = dinosArray[i].fact;
                 innerGridFact.innerText = getFactRandom(dinosArray[i]);
+                }
             }
             gridElement.appendChild(innerGridHeader)
             gridElement.appendChild(innerGridImage)
