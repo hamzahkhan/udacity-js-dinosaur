@@ -1,4 +1,4 @@
-    const json = {
+const json = {
         "Dinos": [
             {
                 "species": "Triceratops",
@@ -92,169 +92,175 @@
         ]
     }
 
-    // Create Dino Constructor
-    function Dino(species,weight,height,diet,where,when,fact, color, image){
-        this.species = species
-        this.weight = weight
-        this.diet = diet
-        this.where= where
-        this.height = height
-        this.when = when
-        this.fact = fact
-        this.color = color
-        this.image = image
+// Create Dino Constructor
+function Dino(species,weight,height,diet,where,when,fact, color, image){
+    this.species = species
+    this.weight = weight
+    this.diet = diet
+    this.where= where
+    this.height = height
+    this.when = when
+    this.fact = fact
+    this.color = color
+    this.image = image
+}
+
+
+// tried to resolve json Promise but had to refactor lot of code to get array from promise
+
+// let jsonNew ;
+// let P1 = fetch("https://raw.githubusercontent.com/hamzahkhan/udacity-js-dinosaur/main/dino.json")
+//                     .then((response) => response.json())
+//                     .then(file => jsonNew = file )
+
+// Promise.all([P1])
+
+
+// Create Dino Objects
+let dinosArray = json.Dinos.map((data) => {
+    const {species, weight, height, diet, where, when, fact, color, image} = data;
+    const dinoObj = new Dino(species, weight, height, diet, where, when, fact,color, image);
+    return dinoObj;
+}).sort(() => 0.5-Math.random())
+
+
+// Create Human Object
+function Human(name, feet, inches, weight, diet, height){
+    this.name = name,
+    this.feet = feet,
+    this.inches = inches,
+    this.weight = weight,
+    this.diet = diet;
+    this.height = height;
+}
+
+// Use IIFE to get human data from form
+let humanFormData = (function(){
+    return {
+        humanName: document.getElementById("name"),
+        humanFeet: document.getElementById("feet"),
+        humanInches: document.getElementById("inches"),
+        humanWeight: document.getElementById("weight"),
+        humanDiet: document.getElementById("diet"),
     }
+})();
 
-    // Create Dino Objects
-    // const json = fetch("./dino.json'").then((data) => data.json).then((file) => console.log(file))
-   
-    var dinosArray = json.Dinos.map((data) => {
-        const {species, weight, height, diet, where, when, fact, color, image} = data;
-        const dinoObj = new Dino(species, weight, height, diet, where, when, fact,color, image);
-        return dinoObj;
-    }).sort(() => 0.5-Math.random())
+function humanData(){
+    const humanName = humanFormData.humanName.value;
+    const humanFeet = humanFormData.humanFeet.value;
+    const humanInches = humanFormData.humanInches.value;
+    const humanWeight = humanFormData.humanWeight.value;
+    const humanDiet = humanFormData.humanDiet.value;
+    const height = (humanFormData.humanFeet.value *12) + humanFormData.humanInches.value;
+    const humanObj = new Human(humanName, humanFeet, humanInches, humanWeight, humanDiet, height)
+    return humanObj;
+}
+
+// Create Dino Compare Method 1
+// NOTE: Weight in JSON file is in lbs, height in inches. 
+/**
+ * 
+ * @param {object} humanData human entered data from form
+ * @return {string}          output for user
+ */
+
+function compareHeight(humanData, dinoObject){
+    // check human height 
+    const humanHeight = humanData.height;
+    const dinoHeight = dinoObject.height;
+    return "Your height is " + humanHeight + " and the dino is " + dinoHeight
+}
+
+// Create Dino Compare Method 2
+// NOTE: Weight in JSON file is in lbs, height in inches.
+function compareWeight(humanData, dinoObject){
+    const humanWeight = humanData.weight;
+    const dinoWeight = dinoObject.weight;
+    return "Your weight is " + humanWeight + " and the dino is " + dinoWeight
+}
 
 
-    // Create Human Object
-    function Human(name, feet, inches, weight, diet, height){
-        this.name = name,
-        this.feet = feet,
-        this.inches = inches,
-        this.weight = weight,
-        this.diet = diet,
-        this.height = height
-    }
+// Create Dino Compare Method 3
+// NOTE: Weight in JSON file is in lbs, height in inches.
+function compareDiet(humanData, dinoObject){
+    const humanDiet = humanData.diet;
+    const dinoDiet = dinoObject.diet;
+    return "Your diet is " + humanDiet + " and the dino is " + dinoDiet
+}
 
-    // Use IIFE to get human data from form
-    var humanFormData = (function(){
-        return {
-            humanName: document.getElementById("name"),
-            humanFeet: document.getElementById("feet"),
-            humanInches: document.getElementById("inches"),
-            humanWeight: document.getElementById("weight"),
-            humanDiet: document.getElementById("diet"),
-        }
-    })();
-
-    function humanData(){
-        const humanName = humanFormData.humanName.value;
-        const humanFeet = humanFormData.humanFeet.value;
-        const humanInches = humanFormData.humanInches.value;
-        const humanWeight = humanFormData.humanWeight.value;
-        const humanDiet = humanFormData.humanDiet.value;
-        const height = (humanFeet*12) + humanInches;
-        const humanObj = new Human(humanName, humanFeet, humanInches, humanWeight, humanDiet, height)
-        return humanObj;
-    }
-
-    // Create Dino Compare Method 1
-    // NOTE: Weight in JSON file is in lbs, height in inches. 
-    /**
-     * 
-     * @param {object} humanData human entered data from form
-     * @return {string}          output for user
-     */
+// compares dinoObject with human entered data
+function getFactRandom(dinoObject){
+    let factRandom = []
+    factRandom.push(dinoObject.fact)
     
-    function compareHeight(humanData, dinoObject){
-        // check human height 
-        const humanHeight = humanData.height;
-        const dinoHeight = dinoObject.height;
-        return "Your height is " + humanHeight + " and the dino is " + dinoHeight
-    }
-    
-    // Create Dino Compare Method 2
-    // NOTE: Weight in JSON file is in lbs, height in inches.
-    function compareWeight(humanData, dinoObject){
-        const humanWeight = humanData.weight;
-        const dinoWeight = dinoObject.weight;
-        return "Your weight is " + humanWeight + " and the dino is " + dinoWeight
-    }
-    
-    
-    // Create Dino Compare Method 3
-    // NOTE: Weight in JSON file is in lbs, height in inches.
-    function compareDiet(humanData, dinoObject){
-        const humanDiet = humanData.diet;
-        const dinoDiet = dinoObject.diet;
-        return "Your diet is " + humanDiet + " and the dino is " + dinoDiet
-    }
-    
-    // compares dinoObject with human entered data
-    function getFactRandom(dinoObject){
-        let factRandom = []
-        factRandom.push(dinoObject.fact)
-        console.log("this is dhhumanData")
-        
-        factRandom.push(compareHeight(humanData(), dinoObject))
-        factRandom.push(compareWeight(humanData(), dinoObject))
-        factRandom.push(compareDiet(humanData(), dinoObject))
-        return factRandom[Math.floor(Math.random()*4)]
-    }
+    factRandom.push(compareHeight(humanData(), dinoObject))
+    factRandom.push(compareWeight(humanData(), dinoObject))
+    factRandom.push(compareDiet(humanData(), dinoObject))
+    return factRandom[Math.floor(Math.random()*4)]
+}
 
-    // Generate Tiles for each Dino in Array
-    function generateTiles(dinosArray){
-        let tilesArray = []
-        for (let i = 0; i < 9; i++){
-            let gridElement = document.createElement("div");
-            gridElement.className = "grid-item"
+// Generate Tiles for each Dino in Array
+function generateTiles(dinosArray){
+    let tilesArray = []
+    for (let i = 0; i < 9; i++){
+        let gridElement = document.createElement("div");
+        gridElement.className = "grid-item"
 
-            let innerGridHeader = document.createElement("h3");
-            let innerGridFact = document.createElement("p");
-            let innerGridImage = document.createElement("img");
-            gridElement.id = "grid" + i;
+        let innerGridHeader = document.createElement("h3");
+        let innerGridFact = document.createElement("p");
+        let innerGridImage = document.createElement("img");
+        gridElement.id = "grid" + i;
 
-            if (dinosArray[i]){
+        // couldnt correctly build logic without hardcoding indexes as below. Lack of time, or I would definitely fix this. 
+        if (dinosArray[i]){
 
-                if(i ===4){
-                    let humanObj = humanData()
-                    innerGridHeader.innerText = humanObj.name;
-                    innerGridImage.setAttribute("src", 'https://static.wikia.nocookie.net/surrealmemes/images/0/09/Meme_Man_HD.png/revision/latest?cb=20190103112747' )
-                }
-                else{
-                innerGridHeader.innerText = dinosArray[i].species;
-                innerGridImage.setAttribute("src",dinosArray[i].image )
-                // can make this random from a function
-                // innerGridFact.innerText = dinosArray[i].fact;
-                innerGridFact.innerText = getFactRandom(dinosArray[i]);
-                }
+            if(i ===4){
+                let humanObj = humanData()
+                innerGridHeader.innerText = humanObj.name;
+                innerGridImage.setAttribute("src", 'https://static.wikia.nocookie.net/surrealmemes/images/0/09/Meme_Man_HD.png/revision/latest?cb=20190103112747' )
             }
-            gridElement.appendChild(innerGridHeader)
-            gridElement.appendChild(innerGridImage)
-            gridElement.appendChild(innerGridFact)
-
-            // gridContainer.appendChild(gridElement)
-            tilesArray.push(gridElement)
+            else{
+            innerGridHeader.innerText = dinosArray[i].species;
+            innerGridImage.setAttribute("src",dinosArray[i].image )
+            innerGridFact.innerText = getFactRandom(dinosArray[i]);
+            }
+        } else {
+            innerGridHeader.innerText = dinosArray[4].species;
+            innerGridImage.setAttribute("src",dinosArray[4].image )
+            innerGridFact.innerText = getFactRandom(dinosArray[4]);
         }
-        return tilesArray
-    }  
-
-    // creates parent DIV and adds child divs to it
-    function generateInfographic(){
-        let mainGrid = document.getElementById("grid");
-
-        // const gridContainer = document.createElement("div");
-        // gridContainer.className = "gridContainer";
-        generateTiles(dinosArray).forEach(function(item) {
-            mainGrid.appendChild(item);
-        })
+        gridElement.appendChild(innerGridHeader)
+        gridElement.appendChild(innerGridImage)
+        gridElement.appendChild(innerGridFact)
+        tilesArray.push(gridElement)
     }
+    return tilesArray
+}  
+
+// creates parent DIV and adds child divs to it
+function generateInfographic(){
+    let mainGrid = document.getElementById("grid");
+
+    generateTiles(dinosArray).forEach(function(item) {
+        mainGrid.appendChild(item);
+    })
+}
 
 
 // On button click, prepare and display infographic
-    function onClickButton () {
-        document.getElementById("dino-compare").style.display = "none";
-        // document.getElementById("grid").classList.remove("hideGrid");
-        if(document.getElementById("grid").childNodes.length === 0){
-            generateInfographic();
-            // add comparision function for human vs DINO
-        }
-        document.getElementById("grid").style.display = "flex";
+function onClickButton () {
+    document.getElementById("dino-compare").style.display = "none";
+    if(document.getElementById("grid").childNodes.length === 0){
+        generateInfographic();
+        // add comparision function for human vs DINO
     }
-        
-    function hideInfoShowForm(){
-        document.getElementById("grid").style.display = "none";
-        document.getElementById("dino-compare").style.display = "block";
-    }
+    document.getElementById("grid").style.display = "flex";
+}
+    
+function hideInfoShowForm(){
+    document.getElementById("grid").style.display = "none";
+    document.getElementById("dino-compare").style.display = "block";
+}
 
 document.getElementById("btn").onclick = onClickButton;
 
